@@ -21,9 +21,11 @@ namespace EmailServiceApi.Services
                 throw new ArgumentException("Recipient email and OTP cannot be null or empty.");
             }
 
-            string smtpHost = "gpnummx2.saps.gov.za";
-            int smtpPort = 25;
-            string fromEmail = "noreply@saps.gov.za";
+            string smtpHost = "smtp.gmail.com"; // gpnummx2.saps.gov.za
+            int smtpPort = 587;
+            string fromEmail = "thabohappy55@gmail.com";
+            string username = "thabohappy55@gmail.com";
+            string password = "nggznmhelsezcbge";
 
             // Create MimeMessage
             var message = new MimeMessage();
@@ -41,9 +43,10 @@ namespace EmailServiceApi.Services
                 using (var client = new SmtpClient())
                 {
                     // Optionally disable SSL validation (not recommended for production)
-                    client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+                    //client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
 
                     client.Connect(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+                    client.Authenticate(username, password);
                     client.Send(message);
                     client.Disconnect(true);
                     return true;
